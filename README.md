@@ -1,6 +1,6 @@
 # Planetary Computer @ Cloud Native Geospatial Outreach Event 2022
 
-### aka.ms/pc-cng
+### https://aka.ms/pc-cng
 
 This repository contains the teaching materials for the Planetary Computer workshop at the [Cloud Native Geospatial Outreach][cng] event.
 
