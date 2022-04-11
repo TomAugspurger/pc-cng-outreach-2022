@@ -1,4 +1,4 @@
-# Planetary Computer @ Cloud Native Geospatial Outreach
+# Planetary Computer @ Cloud Native Geospatial Outreach Event 2022
 
 ### aka.ms/pc-cng
 

@@ -47,7 +47,7 @@ jupyterhub:
           command:
             [
               "/srv/conda/envs/notebook/bin/gitpuller",
-              "https://github.com/TomAugspurger/pc-cng-outreach-2021",
+              "https://github.com/TomAugspurger/pc-cng-outreach-2022",
               "main",
               "workshop",
             ]
