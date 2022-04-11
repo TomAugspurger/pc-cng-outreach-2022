@@ -1,0 +1,2 @@
+FROM mcr.microsoft.com/planetary-computer/python:2021.09.23.1
+RUN /srv/conda/envs/notebook/bin/python -m pip install radiant-mlhub torch git+https://github.com/microsoft/torchgeo.git

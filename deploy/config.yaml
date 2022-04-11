@@ -1,0 +1,130 @@
+jupyterhub:
+  proxy:
+    https:
+      enabled: true
+      hosts:
+        - "pc-cng.westeurope.cloudapp.azure.com"
+      letsencrypt:
+        contactEmail: "taugspurger@microsoft.com"
+    service:
+      annotations:
+        # Update this with your hub's name.
+        service.beta.kubernetes.io/azure-dns-label-name: "pc-cng"
+
+  hub:
+    # Disable hub network Policy, so that the dask gateway server API can reach the hub directly
+    # Not required for dask-gateway>0.9.0
+    # https://github.com/dask/helm-chart/issues/142
+    networkPolicy:
+      enabled: false
+
+    # dask-gateway service added in secrets.yaml
+
+    config:
+      JupyterHub:
+        authenticator_class: dummy
+        # password is set in secrets.yaml
+
+  singleuser:
+    image:
+        name: "mcr.microsoft.com/planetary-computer/python"
+        tag: "2022.04.11.0"
+    startTimeout: 1200  # 20 * 60s = 10 minutes
+    cpu:
+      guarantee: 2.5
+      limit: 4
+    memory:
+      guarantee: "10G"
+      limit: "16G"
+
+    storage:
+      capacity: "15Gi"
+
+    defaultUrl: "/lab/tree/workshop/index.ipynb"
+    lifecycleHooks:
+      postStart:
+        exec:
+          command:
+            [
+              "/srv/conda/envs/notebook/bin/gitpuller",
+              "https://github.com/TomAugspurger/pc-cng-outreach-2021",
+              "main",
+              "workshop",
+            ]
+
+    extraEnv:
+      DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE: '{JUPYTER_IMAGE_SPEC}'
+      DASK_DISTRIBUTED__DASHBOARD__LINK: '/user/{JUPYTERHUB_USER}/proxy/{port}/status'
+      DASK_LABEXTENSION__FACTORY__MODULE: 'dask_gateway'
+      DASK_LABEXTENSION__FACTORY__CLASS: 'GatewayCluster'
+      # GDAL / Rasterio environment variables for performance
+      GDAL_DISABLE_READDIR_ON_OPEN: "EMPTY_DIR"
+      GDAL_HTTP_MERGE_CONSECUTIVE_RANGES: "YES"
+      GDAL_HTTP_MAX_RETRY: "5"
+
+dask-gateway:
+  gateway:
+    # auth set in secrets.yaml
+    backend:
+      worker:
+        # Ensure workers are scheduled on the worker pool
+        extraPodConfig:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "k8s.dask.org/dedicated"
+                    operator: "In"
+                    values:
+                      - "worker"
+
+          tolerations:
+            # allow workers to be scheduled on the worker pool, which has preemptible nodes.
+            - key: "k8s.dask.org/dedicated"
+              operator: "Equal"
+              value: "worker"
+              effect: "NoSchedule"
+            - key: "k8s.dask.org_dedicated"
+              operator: "Equal"
+              value: "worker"
+              effect: "NoSchedule"
+            - key: "kubernetes.azure.com/scalesetpriority"
+              operator: "Equal"
+              value: "spot"
+              effect: "NoSchedule"
+
+    extraConfig:
+      00-clusterconfig: |
+        c.KubeClusterConfig.idle_timeout = 10 * 60  # in seconds
+        c.KubeClusterConfig.cluster_max_cores = 400  # 50 nodes @ 8 workers / node, 1 core / worker
+        c.KubeClusterConfig.cluster_max_memory = "3200 G"  # 8 GiB / core
+        c.KubeClusterConfig.cluster_max_workers = 400  # 1 core, 8 GiB / worker
+
+      01-optionHandler: |
+          # Configure options to
+          # 1. Have the default worker image match the singleuser image
+          # 2. Place bounds on worker CPU and Memory requests
+          # 3. Accept a mapping of environment variables to pass to workers.
+          from dask_gateway_server.options import Options, Float, String, Mapping
+          def cluster_options(user):
+              def option_handler(options):
+                  if ":" not in options.image:
+                      raise ValueError("When specifying an image you must also provide a tag")
+
+                  return {
+                      "worker_cores": 0.88 * min(options.worker_cores / 2, 1),
+                      "worker_cores_limit": options.worker_cores,
+                      "worker_memory": "%fG" % (0.9 * options.worker_memory),
+                      "worker_memory_limit": "%fG" % options.worker_memory,
+                      "image": options.image,
+                      "environment": options.environment,
+                  }
+              return Options(
+                  Float("worker_cores", 1, min=1, max=16, label="Worker Cores"),
+                  Float("worker_memory", 8, min=8, max=128, label="Worker Memory (GiB)"),
+                  String("image", default="pangeo/pangeo-notebook:latest", label="Image"),
+                  Mapping("environment", {}, label="Environment Variables"),
+                  handler=option_handler,
+              )
+          c.Backend.cluster_options = cluster_options
