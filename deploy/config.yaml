@@ -25,17 +25,21 @@ jupyterhub:
         authenticator_class: dummy
         # password is set in secrets.yaml
 
+  scheduling:
+    userPlaceholder:
+      enabled: false
+
   singleuser:
     image:
-        name: "mcr.microsoft.com/planetary-computer/python"
-        tag: "2022.04.11.0"
+      name: "mcr.microsoft.com/planetary-computer/python"
+      tag: "2022.04.11.0"
     startTimeout: 1200  # 20 * 60s = 10 minutes
     cpu:
-      guarantee: 2.5
+      guarantee: 3.75  # below 3.78
       limit: 4
     memory:
-      guarantee: "10G"
-      limit: "16G"
+      guarantee: "14104148K"
+      limit: "14104148K"
 
     storage:
       capacity: "15Gi"
