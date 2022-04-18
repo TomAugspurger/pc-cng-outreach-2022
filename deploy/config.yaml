@@ -31,8 +31,8 @@ jupyterhub:
 
   singleuser:
     image:
-      name: "mcr.microsoft.com/planetary-computer/python"
-      tag: "2022.04.11.0"
+      name: "cngacr.azurecr.io/pccng"
+      tag: "latest"
     startTimeout: 1200  # 20 * 60s = 10 minutes
     cpu:
       guarantee: 3.75  # below 3.78

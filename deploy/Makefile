@@ -1,11 +1,12 @@
-.PHONY: group cluster hub clean storage
+.PHONY: group cluster hub clean storage acr image
 
 LOCATION?=westeurope
 GROUP?=rg-pc-cng
 CLUSTER?=cngcluster
+ACR_NAME?=cngacr
 STORAGE_ACCOUNT?=$(GROUP)
 STORAGE_CONTAINER?=$(GROUP)
-MAX_USER_NODE_COUNT?=60
+MAX_USER_NODE_COUNT?=500
 # 00
 NODE_COUNT?=0
 SUBSCRIPTION="Planetary Computer"
@@ -55,7 +56,8 @@ hub:
 		--version=2021.7.0 \
 		--namespace=dhub \
 		--values=config.yaml \
-		--values=secrets.yaml
+		--values=secrets.yaml \
+		--kube-context=$(CLUSTER)
 
 scale:
 	az aks nodepool scale \
@@ -67,3 +69,9 @@ scale:
 clean:
 	az group delete -n $(GROUP)
 
+acr:
+	# az acr create --resource-group=$(GROUP) --name=$(ACR_NAME) --sku=Standard --location=$(LOCATION)
+	az aks update -g $(GROUP) -n $(CLUSTER) --attach-acr $(ACR_NAME)
+
+image:
+	az acr build -g $(GROUP) -r $(ACR_NAME) -t pccng:latest .
