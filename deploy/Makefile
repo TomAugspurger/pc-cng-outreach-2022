@@ -74,4 +74,4 @@ acr:
 	az aks update -g $(GROUP) -n $(CLUSTER) --attach-acr $(ACR_NAME)
 
 image:
-	az acr build -g $(GROUP) -r $(ACR_NAME) -t pccng:latest .
+	az acr build -g $(GROUP) -r $(ACR_NAME) -t pccng:latest .. -f ../binder/Dockerfile
