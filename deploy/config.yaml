@@ -48,7 +48,7 @@ jupyterhub:
       # guarantee: 1.65 # below 3.78
       limit: 4
     memory:
-      guarantee: "6.8G"
+      guarantee: "6.5G"
       limit: "7.5G"
 
     storage:
