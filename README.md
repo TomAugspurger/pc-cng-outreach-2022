@@ -1,15 +1,8 @@
 # Planetary Computer @ Cloud Native Geospatial Outreach Event 2022
 
-### https://aka.ms/pc-cng
+This tutorial was presented at the 2022 Cloud Native Geospatial Outreach event.
 
-[![Hub](https://img.shields.io/badge/Launch-Hub-blue)](https://pc-cng.westeurope.cloudapp.azure.com/)
-
-Username: `<pick something unique>`
-Password: `geospatial`
-
-This repository contains the teaching materials for the Planetary Computer workshop at the [Cloud Native Geospatial Outreach][cng] event.
-
-These materials are automatically cloned into the [hub][hub] environment.
+It collects examples from various places. Visit https://planetarycomputer.microsoft.com/docs and https://github.com/microsoft/planetarycomputerexamples for up-to-date materials.
 
 1. introduction.ipynb
 2. data-access.ipynb
