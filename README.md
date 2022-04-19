@@ -11,6 +11,11 @@ This repository contains the teaching materials for the Planetary Computer works
 
 These materials are automatically cloned into the [hub][hub] environment.
 
+1. introduction.ipynb
+2. data-access.ipynb
+3. hurricane-florence-animation.ipynb
+4. crop-prediction.ipynb
+
 ### Backup Binder
 
 If the link above isn't working, you can launch this notebook on [mybinder.org](https://mybinder.org/).
