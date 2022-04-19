@@ -44,7 +44,17 @@ jupyterhub:
     storage:
       capacity: "15Gi"
 
-    # defaultUrl: "/lab/tree/workshop/introduction.ipynb"
+    defaultUrl: "/lab/tree/pc-cng-outreach-2022/introduction.ipynb"
+    lifecycleHooks:
+      postStart:
+        exec:
+          command:
+            [
+              "/srv/conda/envs/notebook/bin/gitpuller",
+              "https://github.com/TomAugspurger/pc-cng-outreach-2022",
+              "main",
+              "pc-cng-outreach-2022",
+            ]
 
     extraEnv:
       DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE: '{JUPYTER_IMAGE_SPEC}'
