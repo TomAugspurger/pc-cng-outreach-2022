@@ -1,0 +1,108 @@
+Name:               aks-users-14533555-vmss000005
+Roles:              agent
+Labels:             agentpool=users
+                    beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/instance-type=Standard_D8s_v3
+                    beta.kubernetes.io/os=linux
+                    failure-domain.beta.kubernetes.io/region=westeurope
+                    failure-domain.beta.kubernetes.io/zone=0
+                    hub.jupyter.org/node-purpose=user
+                    kubernetes.azure.com/agentpool=users
+                    kubernetes.azure.com/cluster=MC_rg-pc-cng_cngcluster_westeurope
+                    kubernetes.azure.com/mode=user
+                    kubernetes.azure.com/node-image-version=AKSUbuntu-1804gen2containerd-2022.03.29
+                    kubernetes.azure.com/os-sku=Ubuntu
+                    kubernetes.azure.com/role=agent
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=aks-users-14533555-vmss000005
+                    kubernetes.io/os=linux
+                    kubernetes.io/role=agent
+                    node-role.kubernetes.io/agent=
+                    node.kubernetes.io/instance-type=Standard_D8s_v3
+                    topology.disk.csi.azure.com/zone=
+                    topology.kubernetes.io/region=westeurope
+                    topology.kubernetes.io/zone=0
+Annotations:        csi.volume.kubernetes.io/nodeid: {"disk.csi.azure.com":"aks-users-14533555-vmss000005","file.csi.azure.com":"aks-users-14533555-vmss000005"}
+                    node.alpha.kubernetes.io/ttl: 0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Tue, 19 Apr 2022 08:57:15 -0700
+Taints:             <none>
+Unschedulable:      false
+Lease:
+  HolderIdentity:  aks-users-14533555-vmss000005
+  AcquireTime:     <unset>
+  RenewTime:       Tue, 19 Apr 2022 09:12:43 -0700
+Conditions:
+  Type                 Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----                 ------  -----------------                 ------------------                ------                       -------
+  NetworkUnavailable   False   Tue, 19 Apr 2022 08:57:38 -0700   Tue, 19 Apr 2022 08:57:38 -0700   RouteCreated                 RouteController created a route
+  MemoryPressure       False   Tue, 19 Apr 2022 09:08:45 -0700   Tue, 19 Apr 2022 08:57:15 -0700   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure         False   Tue, 19 Apr 2022 09:08:45 -0700   Tue, 19 Apr 2022 08:57:15 -0700   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure          False   Tue, 19 Apr 2022 09:08:45 -0700   Tue, 19 Apr 2022 08:57:15 -0700   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready                True    Tue, 19 Apr 2022 09:08:45 -0700   Tue, 19 Apr 2022 08:57:25 -0700   KubeletReady                 kubelet is posting ready status. AppArmor enabled
+Addresses:
+  Hostname:    aks-users-14533555-vmss000005
+  InternalIP:  10.240.0.6
+Capacity:
+  attachable-volumes-azure-disk:  16
+  cpu:                            8
+  ephemeral-storage:              129900528Ki
+  hugepages-1Gi:                  0
+  hugepages-2Mi:                  0
+  memory:                         32882856Ki
+  pods:                           110
+Allocatable:
+  attachable-volumes-azure-disk:  16
+  cpu:                            7820m
+  ephemeral-storage:              119716326407
+  hugepages-1Gi:                  0
+  hugepages-2Mi:                  0
+  memory:                         28382376Ki
+  pods:                           110
+System Info:
+  Machine ID:                 5ecbcce2460741b1a64f722b13b184fe
+  System UUID:                f297e343-c2c9-4ae6-add8-41c295c3ff95
+  Boot ID:                    20b9e004-70b0-42a4-a8a9-efe1ec208cc3
+  Kernel Version:             5.4.0-1073-azure
+  OS Image:                   Ubuntu 18.04.6 LTS
+  Operating System:           linux
+  Architecture:               amd64
+  Container Runtime Version:  containerd://1.4.12+azure-3
+  Kubelet Version:            v1.21.9
+  Kube-Proxy Version:         v1.21.9
+PodCIDR:                      10.244.2.0/24
+PodCIDRs:                     10.244.2.0/24
+ProviderID:                   azure:///subscriptions/9da7523a-cb61-4c3e-b1d4-afa5fc6d2da9/resourceGroups/mc_rg-pc-cng_cngcluster_westeurope/providers/Microsoft.Compute/virtualMachineScaleSets/aks-users-14533555-vmss/virtualMachines/5
+Non-terminated Pods:          (9 in total)
+  Namespace                   Name                             CPU Requests  CPU Limits  Memory Requests  Memory Limits     AGE
+  ---------                   ----                             ------------  ----------  ---------------  -------------     ---
+  dhub                        continuous-image-puller-z4fcr    0 (0%)        0 (0%)      0 (0%)           0 (0%)            15m
+  dhub                        user-placeholder-0               1650m (21%)   4 (51%)     7050000Ki (24%)  14104148Ki (49%)  92s
+  dhub                        user-placeholder-1               1650m (21%)   4 (51%)     7050000Ki (24%)  14104148Ki (49%)  86s
+  dhub                        user-placeholder-2               1650m (21%)   4 (51%)     7050000Ki (24%)  14104148Ki (49%)  100s
+  dhub                        user-placeholder-3               1650m (21%)   4 (51%)     7050000Ki (24%)  14104148Ki (49%)  115s
+  kube-system                 azure-ip-masq-agent-5rr5w        100m (1%)     500m (6%)   50Mi (0%)        250Mi (0%)        15m
+  kube-system                 csi-azuredisk-node-lx9sr         30m (0%)      0 (0%)      60Mi (0%)        400Mi (1%)        15m
+  kube-system                 csi-azurefile-node-w468x         30m (0%)      0 (0%)      60Mi (0%)        500Mi (1%)        15m
+  kube-system                 kube-proxy-xv8fp                 100m (1%)     0 (0%)      0 (0%)           0 (0%)            15m
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource                       Requests          Limits
+  --------                       --------          ------
+  cpu                            6860m (87%)       16500m (210%)
+  memory                         28374080Ki (99%)  57594192Ki (202%)
+  ephemeral-storage              0 (0%)            0 (0%)
+  hugepages-1Gi                  0 (0%)            0 (0%)
+  hugepages-2Mi                  0 (0%)            0 (0%)
+  attachable-volumes-azure-disk  0                 0
+Events:
+  Type     Reason                   Age                From        Message
+  ----     ------                   ----               ----        -------
+  Normal   Starting                 15m                kubelet     Starting kubelet.
+  Warning  InvalidDiskCapacity      15m                kubelet     invalid capacity 0 on image filesystem
+  Normal   NodeHasSufficientMemory  15m (x2 over 15m)  kubelet     Node aks-users-14533555-vmss000005 status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    15m (x2 over 15m)  kubelet     Node aks-users-14533555-vmss000005 status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     15m (x2 over 15m)  kubelet     Node aks-users-14533555-vmss000005 status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  15m                kubelet     Updated Node Allocatable limit across pods
+  Normal   Starting                 15m                kube-proxy  Starting kube-proxy.
+  Normal   NodeReady                15m                kubelet     Node aks-users-14533555-vmss000005 status is now: NodeReady
