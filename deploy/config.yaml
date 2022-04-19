@@ -25,9 +25,18 @@ jupyterhub:
         authenticator_class: dummy
         # password is set in secrets.yaml
 
+  prePuller:
+    continuous:
+      enabled: true
+
   scheduling:
     userPlaceholder:
-      enabled: false
+      enabled: true
+    podPriority:
+      enabled: true
+    userPlaceholder:
+      enabled: true
+      replicas: 4
 
   singleuser:
     image:
@@ -35,11 +44,12 @@ jupyterhub:
       tag: "latest"
     startTimeout: 1200  # 20 * 60s = 10 minutes
     cpu:
-      guarantee: 3.75  # below 3.78
+      guarantee: 1.65  # below 3.78
+      # guarantee: 1.65 # below 3.78
       limit: 4
     memory:
-      guarantee: "14104148K"
-      limit: "14104148K"
+      guarantee: "7.2G"
+      limit: "7.5G"
 
     storage:
       capacity: "15Gi"
